@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Reservation {
 	
-	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	
 	private Integer roomNumber;
 	private Date checkIn;
@@ -42,10 +42,25 @@ public class Reservation {
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
 	}
 	
-	public void updateDates(Date checkIn, Date checkOut) {
+	public String updateDates(Date checkIn, Date checkOut) {
+		
+		Date now = new Date();
+		
+		
+ if(checkIn.before(now) || checkOut.before(now)) {
+			 
+			 return "Reservation date must be future dates.";
+		 }
+		 
+		 if(checkOut.before(checkIn)) {
+			 return "Error in reservation: check-in date must be before check-out date.";
+		 }
+		 
 		
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
+		
+		return null;
 	}
 
 	
